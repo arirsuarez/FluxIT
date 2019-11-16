@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -43,14 +44,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Setting actions for toolbar buttons
-    // TODO AboutMe
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String actionIName = (String) item.getTitle();
-        Toast.makeText(getApplicationContext(), "Selected option: " + actionIName, Toast.LENGTH_SHORT).show();
+        /*String actionIName = (String) item.getTitle();
+        Toast.makeText(getApplicationContext(), "Selected option: " + actionIName, Toast.LENGTH_SHORT).show();*/
 
         switch (item.getItemId()) {
             case R.id.about_me_action:
+                WebView linkedIn = new WebView(this);
+                setContentView(linkedIn);
+                linkedIn.loadUrl("https://www.linkedin.com/feed/");
                 break;
         }
         return true;
