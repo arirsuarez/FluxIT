@@ -3,6 +3,8 @@ package com.example.fluxit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,10 +13,20 @@ import android.webkit.WebView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.fluxit.Interfaces.ApiService;
+import com.example.fluxit.Model.Results;
+import com.example.fluxit.Model.User;
+import com.example.fluxit.api.ApiClient;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mainActivityToolbar;
     @BindView(R.id.searchview_action)
     MaterialSearchView searchView;
+    @BindView(R.id.userContainerRecyclerMain)
+    RecyclerView recyclerView;
+    private List<User> userList = new ArrayList<>();
+    private Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    User users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mainActivityToolbar);
+
+       layoutManager = new LinearLayoutManager(MainActivity.this);
+       recyclerView.setLayoutManager(layoutManager);
+       recyclerView.setHasFixedSize(true);
+
+       LoadJson();
+
+
 
     }
 
@@ -57,5 +83,36 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    public void LoadJson(){
+
+        ApiService apiService = ApiClient.getApiClient().create(ApiService.class);
+        Call<Results> call;
+        call = apiService.getApiResults();
+
+        call.enqueue(new Callback<Results>() {
+            @Override
+            public void onResponse(Call<Results> call, Response<Results> response) {
+                if (response.isSuccessful() && response.body().getUserList() != null){
+
+                    userList = response.body().getUserList();
+
+                    adapter = new Adapter(userList, MainActivity.this);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Service Error. Please Refresh", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results> call, Throwable t) {
+
+            }
+        });
+
     }
 }
