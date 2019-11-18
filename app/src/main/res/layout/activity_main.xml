@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/main_toolbar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -20,7 +20,9 @@
             app:logo="@drawable/ic_menu_black_24dp"
             app:popupTheme="@style/AppTheme"
             app:title="@string/app_name"
-            app:titleMarginStart="40dp" />
+            app:titleMarginStart="40dp"
+            android:elevation="4dp"
+            app:layout_scrollFlags="scroll|enterAlways" />
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/searchview_action"
@@ -28,7 +30,16 @@
             android:layout_height="wrap_content"
             android:visibility="visible" />
 
-    </FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:id="@+id/userContainerRecyclerMain"
+            android:layout_below="@id/mainActivityToolbar"
+            android:layout_marginTop="16dp" />
+
+    </RelativeLayout>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
