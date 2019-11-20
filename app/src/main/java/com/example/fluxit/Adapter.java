@@ -26,15 +26,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private OnItemClickListener onItemClickListener;
 
 
-    public Adapter(List<User> userList, Context context) {
+
+
+    public Adapter(List<User> userList, OnItemClickListener onItemClickListener) {
         this.userList = userList;
-        this.context = context;
+        this.onItemClickListener = onItemClickListener;
+
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.user_box, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_box, parent, false);
         return new ViewHolder(view, onItemClickListener);
     }
 
@@ -43,15 +46,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         final ViewHolder holder = holder1;
         User user = userList.get(position);
-
-
-
-        Glide.with(context)
-                .load(user.getPicture().getThumbnail())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(holder.userThumbnail);
-
-        holder.userName.setText(user.getEmail());
+        holder.bind(user);
     }
 
 
@@ -93,5 +88,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             onItemClickListener.onItemClick(view, getAdapterPosition());
 
         }
+
+        public void bind (User user){
+            Glide.with(itemView)
+                    .load(user.getPicture().getLarge())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(userThumbnail);
+
+            userName.setText(user.getEmail());
+        }
+
     }
 }
