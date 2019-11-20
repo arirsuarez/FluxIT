@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements Adapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
     // Binding elements with ButterKnife
 
@@ -144,15 +144,23 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-            Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+    private void initListener(){
 
-            User user = userList.get(position);
-            intent.putExtra("profileLargePicture", user.getPicture().getLarge());
-            intent.putExtra("userEmailUserActivity", user.getEmail());
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
 
-            startActivity(intent);
+                User user = userList.get(position);
+                intent.putExtra("profileLargePicture", user.getPicture().getLarge());
+                intent.putExtra("userEmailUserActivity", user.getEmail());
 
+                startActivity(intent);
+
+
+
+
+            }
+        });
     }
 }
