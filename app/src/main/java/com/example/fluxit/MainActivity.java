@@ -6,9 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private List<User> userList = new ArrayList<>();
     private Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    Results results;
     User users;
 
     @Override
@@ -66,6 +71,30 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_toolbar_menu, menu);
         searchView.setMenuItem(menu.findItem(R.id.search_action));
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.search_action).getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.search_action);
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Search User...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                if(s.length()>3){
+                    LoadJson();
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                LoadJson();
+                return true;
+            }
+        });
+
+        searchMenuItem.getIcon().setVisible(false,false);
+
         return true;
     }
 
@@ -102,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-
                 } else {
                     Toast.makeText(MainActivity.this, "Service Error. Please Refresh", Toast.LENGTH_SHORT).show();
                 }
@@ -114,5 +142,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initListener(){
+
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+
+                User user = userList.get(position);
+                intent.putExtra("profileLargePicture", user.getPicture().getLarge());
+                intent.putExtra("userEmailUserActivity", user.getEmail());
+
+                startActivity(intent);
+
+
+
+
+            }
+        });
     }
 }
