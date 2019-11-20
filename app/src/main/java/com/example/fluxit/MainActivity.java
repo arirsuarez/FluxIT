@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             case R.id.about_me_action:
                 WebView linkedIn = new WebView(this);
                 setContentView(linkedIn);
-                linkedIn.loadUrl("https://www.linkedin.com/feed/");
+                linkedIn.loadUrl("https://www.linkedin.com/in/ariel-suarez");
                 break;
         }
         return true;
