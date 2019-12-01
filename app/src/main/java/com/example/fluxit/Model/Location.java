@@ -1,6 +1,6 @@
 package com.example.fluxit.Model;
 
-class Location {
+public class Location {
 
     private Street street;
     private Coordinates coordinates;

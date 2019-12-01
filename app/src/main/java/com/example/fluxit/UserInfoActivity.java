@@ -26,6 +26,8 @@ public class UserInfoActivity extends AppCompatActivity {
     TextView userAge;
     private String profileLargePictureString;
     private String emailString;
+    private String completeUserName;
+    private String age;
 
 
     @Override
@@ -35,11 +37,22 @@ public class UserInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        profileLargePictureString = intent.getStringExtra("profileLargePicture");
-        emailString = intent.getStringExtra("userEmailUserActivity");
 
-        Glide.with(this).load(profileLargePictureString).into(profileLargePicture);
+       profileLargePictureString = intent.getStringExtra("profileLargePicture");
+        emailString = intent.getStringExtra("userEmailUserActivity");
+        completeUserName = intent.getStringExtra("userCompleteNameTitle" + " " + "userCompleteNameFirst" + " " + "userCompleteNameLast");
+        age = intent.getStringExtra("userAge");
+
+
+        //TODO Null UserName & Age
+
         userEmailUserActivity.setText(emailString);
+        userCompleteName.setText(completeUserName);
+        userAge.setText(age);
+        Glide.with(this)
+                .load(profileLargePictureString)
+                .into(profileLargePicture);
+
 
 
     }

@@ -1,6 +1,6 @@
 package com.example.fluxit.Model;
 
-class Dob {
+public class Dob {
 
     private Integer age;
 

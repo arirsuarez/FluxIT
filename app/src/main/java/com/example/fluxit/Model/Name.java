@@ -1,6 +1,6 @@
 package com.example.fluxit.Model;
 
-class Name {
+public class Name {
 
     private String title;
     private String first;

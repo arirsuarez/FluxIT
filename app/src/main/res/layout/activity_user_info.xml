@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     android:orientation="vertical"
-    tools:context=".UserInfoActivity"
-    android:background="@color/colorAccent">
+    tools:context=".UserInfoActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,97 +14,95 @@
         android:orientation="vertical">
 
 
-
-
-    <RelativeLayout
-        android:id="@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <ImageView
-            android:id="@+id/header_cover_image"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:backgroundTint="@color/colorAccent"
-            android:scaleType="fitXY"
-            android:src="@drawable/fluxit" />
-
-        <ImageView
-            android:id="@+id/profileLargePicture"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-
-            android:layout_below="@+id/header_cover_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-130dp"
-            android:clickable="true"
-            android:elevation="5dp"
-            android:padding="20dp"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/ic_launcher_background"/>
-
         <RelativeLayout
-            android:id="@+id/profile_layout"
+            android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/header_cover_image"
-            android:background="@color/colorAccent"
-            android:elevation="4dp"
-            android:paddingBottom="24dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/userNameUserActivity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="70dp"
-                android:textColor="#000"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                tools:text="User Name" />
 
-            <TextView
-                android:id="@+id/userEmailUserActivity"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/header_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="@color/colorAccent"
+                android:scaleType="fitXY"
+                android:src="@drawable/fluxit" />
+
+
+
+
+                <ImageView
+                    android:id="@+id/profileLargePicture"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    tools:src="@drawable/ic_launcher_background"
+                    android:layout_below="@+id/header_cover_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-130dp"
+                    android:clickable="true"
+                    android:elevation="500dp"
+                    android:padding="20dp"
+                    android:scaleType="centerCrop"/>
+            <RelativeLayout
+                android:id="@+id/profile_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/userNameUserActivity"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:textColor="#000"
-                android:textSize="18sp"
-                tools:text="email@emailexample.com" />
+                android:layout_below="@+id/header_cover_image"
+                android:background="@color/colorAccent"
+                android:elevation="4dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    android:id="@+id/userNameUserActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="70dp"
+                    android:textColor="#000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="User Name" />
+
+                <TextView
+                    android:id="@+id/userEmailUserActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/userNameUserActivity"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    tools:text="email@emailexample.com" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/userCompleteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/userAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:textColor="#000"
+            android:textSize="18sp" />
 
     </LinearLayout>
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
-
-            <TextView
-                android:id="@+id/userCompleteName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textSize="18sp"
-                tools:text="Name: "
-                android:background="#fff"/>
-
-            <TextView
-                android:id="@+id/userAge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textSize="18sp"
-                tools:text="Age: "
-                android:background="#fff"/>
-
-        </LinearLayout>
 
 
 </LinearLayout>

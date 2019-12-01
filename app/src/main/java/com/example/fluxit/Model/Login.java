@@ -1,6 +1,6 @@
 package com.example.fluxit.Model;
 
-class Login {
+public class Login {
 
     private String username;
 

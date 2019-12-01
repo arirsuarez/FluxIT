@@ -1,6 +1,6 @@
 package com.example.fluxit.Model;
 
-class Coordinates {
+public class Coordinates {
 
     private String latitude;
     private String longitude;

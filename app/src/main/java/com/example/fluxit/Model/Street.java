@@ -1,6 +1,6 @@
 package com.example.fluxit.Model;
 
-class Street {
+public class Street {
 
     private String name;
     private Integer number;

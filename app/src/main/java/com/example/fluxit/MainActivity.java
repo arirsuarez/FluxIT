@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
     private List<User> userList = new ArrayList<>();
     private Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    Results results;
-    User users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +54,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
         setSupportActionBar(mainActivityToolbar);
 
-       layoutManager = new LinearLayoutManager(MainActivity.this);
-       recyclerView.setLayoutManager(layoutManager);
-       recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
 
-       LoadJson();
-
+        LoadJson();
 
 
     }
@@ -80,10 +77,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                if(s.length()>3){
-                    LoadJson();
-                }
-                return true;
+
+                return false;
             }
 
             @Override
@@ -93,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             }
         });
 
-        searchMenuItem.getIcon().setVisible(false,false);
+        searchMenuItem.getIcon().setVisible(false, false);
 
         return true;
     }
@@ -114,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         return true;
     }
 
-    public void LoadJson(){
+    public void LoadJson() {
 
         ApiService apiService = ApiClient.getApiClient().create(ApiService.class);
         Call<Results> call;
@@ -123,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         call.enqueue(new Callback<Results>() {
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
-                if (response.isSuccessful() && response.body().getUserList() != null){
+                if (response.isSuccessful() && response.body().getUserList() != null) {
 
                     userList = response.body().getUserList();
 
@@ -146,13 +141,17 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
     @Override
     public void onItemClick(View view, int position) {
-            Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+        Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
 
-            User user = userList.get(position);
-            intent.putExtra("profileLargePicture", user.getPicture().getLarge());
-            intent.putExtra("userEmailUserActivity", user.getEmail());
+        User user = userList.get(position);
+        intent.putExtra("profileLargePicture", user.getPicture().getLarge());
+        intent.putExtra("userEmailUserActivity", user.getLogin().getUsername());
+        intent.putExtra("userCompleteNameTitle", user.getName().getTitle());
+        intent.putExtra("userCompleteNameFirst", user.getName().getFirst());
+        intent.putExtra("userCompleteNameLast", user.getName().getLast());
+        intent.putExtra("userAge", user.getDob().getAge());
 
-            startActivity(intent);
+        startActivity(intent);
 
     }
 }

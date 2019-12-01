@@ -22,7 +22,6 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private List<User> userList;
-    private Context context;
     private OnItemClickListener onItemClickListener;
 
 
@@ -56,9 +55,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return userList.size();
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener = onItemClickListener;
-    }
 
     public interface OnItemClickListener {
         void onItemClick (View view, int position);
@@ -95,7 +91,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(userThumbnail);
 
-            userName.setText(user.getEmail());
+            userName.setText(user.getLogin().getUsername());
         }
 
     }
