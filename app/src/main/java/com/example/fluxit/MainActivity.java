@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
                 if(lastVisiblePosition >= recyclerCount - 5){
                     Toast.makeText(MainActivity.this, "Llegué al final", Toast.LENGTH_SHORT).show();
+                    //TODO launch request to API
                 }
             }
         });
