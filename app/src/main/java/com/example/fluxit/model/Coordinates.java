@@ -1,6 +1,8 @@
-package com.example.fluxit.Model;
+package com.example.fluxit.model;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
 
     private String latitude;
     private String longitude;

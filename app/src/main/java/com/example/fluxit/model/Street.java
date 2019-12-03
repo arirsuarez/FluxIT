@@ -1,6 +1,8 @@
-package com.example.fluxit.Model;
+package com.example.fluxit.model;
 
-public class Street {
+import java.io.Serializable;
+
+public class Street implements Serializable {
 
     private String name;
     private Integer number;

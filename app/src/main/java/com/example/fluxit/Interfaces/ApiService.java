@@ -1,6 +1,6 @@
 package com.example.fluxit.Interfaces;
 
-import com.example.fluxit.Model.Results;
+import com.example.fluxit.model.Results;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -8,11 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.fluxit.model.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UserInfoActivity extends AppCompatActivity {
+
+    public static final String KEY_USER = "user";
 
     @BindView(R.id.profileLargePicture)
     ImageView profileLargePicture;
@@ -37,14 +40,13 @@ public class UserInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        User user = (User) bundle.getSerializable(KEY_USER);
 
-       profileLargePictureString = intent.getStringExtra("profileLargePicture");
-        emailString = intent.getStringExtra("userEmailUserActivity");
-        completeUserName = intent.getStringExtra("userCompleteNameTitle" + " " + "userCompleteNameFirst" + " " + "userCompleteNameLast");
-        age = intent.getStringExtra("userAge");
-
-
-        //TODO Null UserName & Age
+       profileLargePictureString = user.getPicture().getLarge();
+        emailString = user.getEmail();
+        completeUserName = user.getName().getTitle() + " " + user.getName().getFirst() + " " + user.getName().getLast();
+        age = user.getDob().getAge().toString();
 
         userEmailUserActivity.setText(emailString);
         userCompleteName.setText(completeUserName);
@@ -52,7 +54,6 @@ public class UserInfoActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(profileLargePictureString)
                 .into(profileLargePicture);
-
 
 
     }

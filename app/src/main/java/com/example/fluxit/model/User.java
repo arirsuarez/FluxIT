@@ -1,8 +1,8 @@
-package com.example.fluxit.Model;
+package com.example.fluxit.model;
 
-import java.util.jar.Attributes;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
 
     private String email;
     private Login login;

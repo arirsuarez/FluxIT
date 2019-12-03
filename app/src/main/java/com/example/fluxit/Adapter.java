@@ -1,11 +1,8 @@
 package com.example.fluxit;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.example.fluxit.Model.Results;
-import com.example.fluxit.Model.User;
+import com.example.fluxit.model.User;
 
 import java.util.List;
 

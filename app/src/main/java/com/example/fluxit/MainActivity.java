@@ -18,9 +18,9 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.fluxit.Interfaces.ApiService;
-import com.example.fluxit.Model.Results;
-import com.example.fluxit.Model.User;
 import com.example.fluxit.api.ApiClient;
+import com.example.fluxit.model.Results;
+import com.example.fluxit.model.User;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
     RecyclerView recyclerView;
     private List<User> userList = new ArrayList<>();
     private Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +52,30 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
         setSupportActionBar(mainActivityToolbar);
 
-        layoutManager = new LinearLayoutManager(MainActivity.this);
+        layoutManager = new LinearLayoutManager(this, recyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
+                int recyclerCount = adapter.getItemCount();
+
+                if(lastVisiblePosition >= recyclerCount - 5){
+                    Toast.makeText(MainActivity.this, "Llegué al final", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         LoadJson();
 
@@ -144,12 +163,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
 
         User user = userList.get(position);
-        intent.putExtra("profileLargePicture", user.getPicture().getLarge());
-        intent.putExtra("userEmailUserActivity", user.getLogin().getUsername());
-        intent.putExtra("userCompleteNameTitle", user.getName().getTitle());
-        intent.putExtra("userCompleteNameFirst", user.getName().getFirst());
-        intent.putExtra("userCompleteNameLast", user.getName().getLast());
-        intent.putExtra("userAge", user.getDob().getAge());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(UserInfoActivity.KEY_USER,user);
+        intent.putExtras(bundle);
 
         startActivity(intent);
 

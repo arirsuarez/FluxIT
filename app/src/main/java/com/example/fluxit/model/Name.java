@@ -1,6 +1,8 @@
-package com.example.fluxit.Model;
+package com.example.fluxit.model;
 
-public class Name {
+import java.io.Serializable;
+
+public class Name implements Serializable {
 
     private String title;
     private String first;
