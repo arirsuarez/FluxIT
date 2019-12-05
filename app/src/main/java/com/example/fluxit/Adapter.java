@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.example.fluxit.model.User;
+import com.example.fluxit.model.pojo.User;
 
 import java.util.List;
 

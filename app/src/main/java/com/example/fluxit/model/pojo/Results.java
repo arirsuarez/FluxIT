@@ -1,4 +1,4 @@
-package com.example.fluxit.model;
+package com.example.fluxit.model.pojo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -17,10 +17,11 @@ import android.webkit.WebView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.fluxit.Interfaces.ApiService;
+import com.example.fluxit.controller.UserController;
+import com.example.fluxit.util.ApiService;
 import com.example.fluxit.api.ApiClient;
-import com.example.fluxit.model.Results;
-import com.example.fluxit.model.User;
+import com.example.fluxit.model.pojo.Results;
+import com.example.fluxit.model.pojo.User;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             }
         });
 
-        LoadJson();
+       // LoadJson();
 
 
     }
@@ -103,7 +104,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
             @Override
             public boolean onQueryTextChange(String s) {
-                LoadJson();
+
+               // LoadJson();
+
                 return true;
             }
         });
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         return true;
     }
 
-    public void LoadJson() {
+   /* public void LoadJson() {
 
         ApiService apiService = ApiClient.getApiClient().create(ApiService.class);
         Call<Results> call;
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             }
         });
 
-    }
+    }*/
 
     @Override
     public void onItemClick(View view, int position) {

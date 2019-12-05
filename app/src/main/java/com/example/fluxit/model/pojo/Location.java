@@ -1,4 +1,4 @@
-package com.example.fluxit.model;
+package com.example.fluxit.model.pojo;
 
 import java.io.Serializable;
 
