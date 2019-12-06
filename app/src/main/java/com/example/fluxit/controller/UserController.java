@@ -18,18 +18,9 @@ public class UserController {
         loading = false;
     }
 
-  public void userApiRequest (final ResultListener<UsersContainer> viewListener) {
+    public void userApiRequest(final ResultListener<UsersContainer> viewListener) {
 
-      dao.userRequestDao(new ResultListener<UsersContainer>() {
-          @Override
-          public void onFinish(UsersContainer results) {
-              viewListener.onFinish(results);
-          }
-      });
-  }
-
-
-        /*  if(!loading && page++ <= page){
+        if (!loading && page++ <= page) {
             loading = true;
             dao.userRequestDao(new ResultListener<UsersContainer>() {
                 @Override
@@ -41,14 +32,5 @@ public class UserController {
             });
         }
     }
-
-    public void getSelectedUserByUsername (final ResultListener<UserInfoActivity> viewListener, String userName){
-        dao.userRequestDao(new ResultListener<UsersContainer>() {
-            @Override
-            public void onFinish(UsersContainer results) {
-                viewListener.onFinish(results);
-            }
-        });
-    }*/
 
 }

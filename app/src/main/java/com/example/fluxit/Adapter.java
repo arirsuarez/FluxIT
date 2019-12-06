@@ -3,6 +3,7 @@ package com.example.fluxit;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import com.example.fluxit.model.pojo.User;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements View.OnClickListener {
 
     private List<User> userList;
     private BoxListener boxListener;
@@ -91,15 +92,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public interface BoxListener{
         public void userPicked(User userPicked);
+
     }
 
-    /*public class ViewHolder extends RecyclerView.ViewHolder *//*implements View.OnClickListener*//* {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView userName;
         ImageView userThumbnail;
-        OnItemClickListener onItemClickListener;
+        AdapterView.OnItemClickListener onItemClickListener;
 
-        public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
+        public ViewHolder(@NonNull View itemView, AdapterView.OnItemClickListener onItemClickListener) {
 
             super(itemView);
 
@@ -111,12 +113,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             this.onItemClickListener = onItemClickListener;
         }
 
-       *//* @Override
+       @Override
         public void onClick(View view) {
 
             onItemClickListener.onItemClick(view, getAdapterPosition());
 
-        }*//*
+        }
 
         public void bind(User user) {
             Glide.with(itemView)
@@ -127,5 +129,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             userName.setText(user.getLogin().getUsername());
         }
 
-    }*/
+    }
 }
