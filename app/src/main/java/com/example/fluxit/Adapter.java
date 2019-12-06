@@ -18,32 +18,35 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private List<User> userList;
-    private OnItemClickListener onItemClickListener;
+    private BoxListener boxListener;
 
-
-
-
-    public Adapter(List<User> userList, OnItemClickListener onItemClickListener) {
+    public Adapter(List<User> userList, BoxListener boxListener) {
         this.userList = userList;
-        this.onItemClickListener = onItemClickListener;
+        this.boxListener = boxListener;
 
+    }
+
+    public void refreshRecyclerList(List<User> userList) {
+        this.userList.addAll(userList);
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_box, parent, false);
-        return new ViewHolder(view, onItemClickListener);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder1, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final ViewHolder holder = holder1;
         User user = userList.get(position);
+        ViewHolder viewHolder = holder;
         holder.bind(user);
     }
-
 
 
     @Override
@@ -52,11 +55,45 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
 
-    public interface OnItemClickListener {
-        void onItemClick (View view, int position);
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView userThumbnailBox;
+        private TextView userNameBox;
+
+        public ViewHolder(@NonNull final View itemView) {
+            super(itemView);
+
+            userNameBox = itemView.findViewById(R.id.userNameMainRecycler);
+            userThumbnailBox = itemView.findViewById(R.id.userThumbnailMainRecycler);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    User user = userList.get(getAdapterPosition());
+                    boxListener.userPicked(user);
+
+                }
+            });
+        }
+
+        public void bind (User user){
+
+            Glide.with(itemView)
+                    .load(user.getPicture().getLarge())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(userThumbnailBox);
+
+            userNameBox.setText(user.getLogin().getUsername());
+
+        }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public interface BoxListener{
+        public void userPicked(User userPicked);
+    }
+
+    /*public class ViewHolder extends RecyclerView.ViewHolder *//*implements View.OnClickListener*//* {
 
         TextView userName;
         ImageView userThumbnail;
@@ -66,7 +103,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
             super(itemView);
 
-            itemView.setOnClickListener(this);
+            // itemView.setOnClickListener(this);
 
             userName = itemView.findViewById(R.id.userNameMainRecycler);
             userThumbnail = itemView.findViewById(R.id.userThumbnailMainRecycler);
@@ -74,14 +111,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             this.onItemClickListener = onItemClickListener;
         }
 
-        @Override
+       *//* @Override
         public void onClick(View view) {
 
             onItemClickListener.onItemClick(view, getAdapterPosition());
 
-        }
+        }*//*
 
-        public void bind (User user){
+        public void bind(User user) {
             Glide.with(itemView)
                     .load(user.getPicture().getLarge())
                     .transition(DrawableTransitionOptions.withCrossFade())
@@ -90,5 +127,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             userName.setText(user.getLogin().getUsername());
         }
 
-    }
+    }*/
 }

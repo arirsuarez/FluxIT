@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 
 public interface ApiService {
 
-    @GET("api/?results=20")
+    @GET("api/?page=1&results=20&seed=abc")
     Call<Results> getApiResults();
 
 

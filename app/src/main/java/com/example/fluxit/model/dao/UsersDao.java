@@ -14,7 +14,6 @@ public class UsersDao {
 
     private Retrofit retrofit;
     public static final String BASE_URL = "https://randomuser.me/api/";
-    private ApiClient apiClient;
     private UserService userService;
 
     public UsersDao() {
@@ -24,12 +23,12 @@ public class UsersDao {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-         apiClient = retrofit.create(ApiClient.class);
+         userService = retrofit.create(UserService.class);
     }
 
-    public void apiRequest(final ResultListener<UsersContainer> controllerListener){
+    public void userRequestDao (final ResultListener<UsersContainer> controllerListener){
 
-        Call<UsersContainer> usersContainerCall = userService.userApiRequest(1);
+        Call<UsersContainer> usersContainerCall = userService.userApiRequest();
 
         usersContainerCall.enqueue(new Callback<UsersContainer>() {
             @Override

@@ -15,13 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.fluxit.controller.UserController;
-import com.example.fluxit.util.ApiService;
-import com.example.fluxit.api.ApiClient;
-import com.example.fluxit.model.pojo.Results;
+import com.example.fluxit.model.dao.UsersContainer;
 import com.example.fluxit.model.pojo.User;
+import com.example.fluxit.util.ResultListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -29,11 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements Adapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements Adapter.BoxListener {
 
     // Binding elements with ButterKnife
 
@@ -43,9 +38,10 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
     MaterialSearchView searchView;
     @BindView(R.id.userContainerRecyclerMain)
     RecyclerView recyclerView;
-    private List<User> userList = new ArrayList<>();
-    private Adapter adapter;
+    private List<User> userList;
     private LinearLayoutManager layoutManager;
+    private Adapter recyclerViewAdapter;
+    private UserController userController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +49,54 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
         setSupportActionBar(mainActivityToolbar);
 
+        userController = new UserController();
         layoutManager = new LinearLayoutManager(this, recyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
+        userList = new ArrayList<>();
+
+
+        requestApiUserList();
+
+        recyclerViewAdapter = new Adapter(userList, this);
+
+        recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setHasFixedSize(true);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastBox = layoutManager.findLastVisibleItemPosition();
+                int recyclerSize = recyclerViewAdapter.getItemCount();
+
+                if (lastBox >= recyclerSize - 5){
+
+                    requestApiUserList();
+                }
+            }
+        });
+
+        /*final UserController userController = new UserController();
+        userController.userApiRequest(new ResultListener<UsersContainer>() {
+            @Override
+            public void onFinish(UsersContainer results) {
+                userList = results.getResults();
+                recyclerViewAdapter.refreshRecyclerList(userList);
+            }
+        });
+
+        recyclerViewAdapter = new Adapter(userList);
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setHasFixedSize(true);*/
+
+        /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -75,11 +111,34 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
                 if(lastVisiblePosition >= recyclerCount - 5){
                     Toast.makeText(MainActivity.this, "Llegué al final", Toast.LENGTH_SHORT).show();
                     //TODO launch request to API
+
+
                 }
             }
-        });
+        });*/
 
-       // LoadJson();
+        // LoadJson();
+
+
+    }
+
+    private void requestApiUserList() {
+
+        userController.userApiRequest(new ResultListener<UsersContainer>() {
+            @Override
+            public void onFinish(UsersContainer results) {
+                userList = results.getResults();
+                recyclerViewAdapter.refreshRecyclerList(userList);
+            }
+        });
+    }
+
+    @Override
+    public void userPicked(User userPicked) {
+
+        /*String userName = userPicked.getLogin().getUsername();
+
+        userController.getSelectedUserByUsername(new ResultListener<UserInfoActivity>())*/
 
 
     }
@@ -105,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             @Override
             public boolean onQueryTextChange(String s) {
 
-               // LoadJson();
+                // LoadJson();
 
                 return true;
             }
@@ -162,16 +221,18 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
     }*/
 
-    @Override
+    /*@Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
 
         User user = userList.get(position);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(UserInfoActivity.KEY_USER,user);
+        bundle.putSerializable(UserInfoActivity.KEY_USER, user);
         intent.putExtras(bundle);
 
         startActivity(intent);
 
-    }
+    }*/
+
+
 }
