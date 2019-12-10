@@ -3,6 +3,7 @@ package com.example.fluxit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.fluxit.controller.UserController;
 import com.example.fluxit.model.dao.UsersContainer;
@@ -83,42 +85,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.BoxListen
             }
         });
 
-        /*final UserController userController = new UserController();
-        userController.userApiRequest(new ResultListener<UsersContainer>() {
-            @Override
-            public void onFinish(UsersContainer results) {
-                userList = results.getResults();
-                recyclerViewAdapter.refreshRecyclerList(userList);
-            }
-        });
-
-        recyclerViewAdapter = new Adapter(userList);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setHasFixedSize(true);*/
-
-        /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastVisiblePosition = layoutManager.findLastVisibleItemPosition();
-                int recyclerCount = adapter.getItemCount();
-
-                if(lastVisiblePosition >= recyclerCount - 5){
-                    Toast.makeText(MainActivity.this, "Llegué al final", Toast.LENGTH_SHORT).show();
-                    //TODO launch request to API
-
-
-                }
-            }
-        });*/
-
-        // LoadJson();
-
 
     }
 
@@ -136,11 +102,16 @@ public class MainActivity extends AppCompatActivity implements Adapter.BoxListen
     @Override
     public void userPicked(User userPicked) {
 
-        /*String userName = userPicked.getLogin().getUsername();
+        // Toast.makeText(this, userPicked.getLogin().getUsername(), Toast.LENGTH_SHORT).show();
 
-        userController.getSelectedUserByUsername(new ResultListener<UserInfoActivity>())*/
+        Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(UserInfoActivity.KEY_USER, userPicked);
+        intent.putExtras(bundle);
 
-
+        startActivity(intent);
+        //Fragment, instance, .setArguments(), userPicked, stick Fragment y and getArguments()
+        //
     }
 
     // Menu Inflater
@@ -163,8 +134,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.BoxListen
 
             @Override
             public boolean onQueryTextChange(String s) {
-
-                // LoadJson();
 
                 return true;
             }
@@ -190,49 +159,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.BoxListen
         }
         return true;
     }
-
-   /* public void LoadJson() {
-
-        ApiService apiService = ApiClient.getApiClient().create(ApiService.class);
-        Call<Results> call;
-        call = apiService.getApiResults();
-
-        call.enqueue(new Callback<Results>() {
-            @Override
-            public void onResponse(Call<Results> call, Response<Results> response) {
-                if (response.isSuccessful() && response.body().getUserList() != null) {
-
-                    userList = response.body().getUserList();
-
-                    adapter = new Adapter(userList, MainActivity.this);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Service Error. Please Refresh", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results> call, Throwable t) {
-
-            }
-        });
-
-    }*/
-
-    /*@Override
-    public void onItemClick(View view, int position) {
-        Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
-
-        User user = userList.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(UserInfoActivity.KEY_USER, user);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
-
-    }*/
 
 
 }

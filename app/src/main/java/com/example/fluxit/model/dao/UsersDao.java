@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UsersDao {
 
     private Retrofit retrofit;
-    public static final String BASE_URL = "https://randomuser.me/api/";
+    public static final String BASE_URL = "https://randomuser.me/";
     private UserService userService;
 
     public UsersDao() {
@@ -23,12 +23,12 @@ public class UsersDao {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-         userService = retrofit.create(UserService.class);
+        userService = retrofit.create(UserService.class);
     }
 
-    public void userRequestDao (final ResultListener<UsersContainer> controllerListener){
+    public void userRequestDao(final ResultListener<UsersContainer> controllerListener, Integer page, Integer results, String seed) {
 
-        Call<UsersContainer> usersContainerCall = userService.userApiRequest();
+        Call<UsersContainer> usersContainerCall = userService.userApiRequest(page, results, seed);
 
         usersContainerCall.enqueue(new Callback<UsersContainer>() {
             @Override

@@ -8,8 +8,10 @@ import retrofit2.http.Query;
 
 public interface UserService {
 
-    @GET("?page=1&results=20&seed=abc")
-    Call<UsersContainer> userApiRequest();
+    @GET("/api")
+    Call<UsersContainer> userApiRequest(@Query("page") Integer page,
+                                        @Query("results") Integer results,
+                                        @Query("seed") String seed);
 
 
 }

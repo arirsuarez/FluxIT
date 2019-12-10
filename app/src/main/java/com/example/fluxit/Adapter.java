@@ -16,7 +16,7 @@ import com.example.fluxit.model.pojo.User;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements View.OnClickListener {
+public class Adapter extends RecyclerView.Adapter<Adapter.UserViewHolder> {
 
     private List<User> userList;
     private BoxListener boxListener;
@@ -34,18 +34,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_box, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        UserViewHolder viewHolder = new UserViewHolder(view);
         return viewHolder;
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
-        ViewHolder viewHolder = holder;
         holder.bind(user);
     }
 
@@ -55,13 +53,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         return userList.size();
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView userThumbnailBox;
         private TextView userNameBox;
 
-        public ViewHolder(@NonNull final View itemView) {
+        public UserViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             userNameBox = itemView.findViewById(R.id.userNameMainRecycler);
@@ -95,7 +92,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+   /* public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView userName;
         ImageView userThumbnail;
@@ -111,12 +108,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
             userThumbnail = itemView.findViewById(R.id.userThumbnailMainRecycler);
 
             this.onItemClickListener = onItemClickListener;
+            itemView.setOnClickListener(this);
         }
 
        @Override
         public void onClick(View view) {
-
-            onItemClickListener.onItemClick(view, getAdapterPosition());
 
         }
 
@@ -129,5 +125,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
             userName.setText(user.getLogin().getUsername());
         }
 
-    }
+    }*/
 }
